@@ -7,48 +7,28 @@ __maintainer__ = "Ashutosh Mishra"
 __status__ = "Production"
 
 import pandas as pd
-
 import requests
-
 import time
-
 from lxml import html
-
 import urllib3
-
 import os
-
 from datetime import datetime
-
 from openpyxl import load_workbook
-
 from selenium import webdriver
-
 from bs4 import BeautifulSoup as bs
 
- 
-
-urllib3.disable_warnings()
- 
+urllib3.disable_warnings() 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-
 chromedriver = dir_path + '\Input\chromedriver'
-
 #driver = webdriver.Chrome(chromedriver) #...for chrome
 
- 
-
 class Product_Auditer:
-
- 
 
     def __init__(self):
 
         self.input=[]
 
         self.output = {'Link': [], 'Status': [],'Redirect_URL':[]}
-
- 
 
     def read_input(self):
 
@@ -116,7 +96,6 @@ class Product_Auditer:
                         pname = contentdata.xpath("//div[@id='add-to-cart-stack']/div[2]//text()")
 
  
-
                     if pname == []:
 
                         self.output['Link'].append(links)
@@ -148,8 +127,6 @@ class Product_Auditer:
             count += 1
 
             flag_counter += 1
-
- 
 
     ######   Second method using bs4  #####
 
@@ -213,7 +190,7 @@ class Product_Auditer:
 
         now = datetime.now().strftime("_%d_%b_%y_%I_%M_%p")
 
-        writer = pd.ExcelWriter(dir_path + '\Output\NPL_Auditer_Output' + str(now) + '.xlsx')
+        writer = pd.ExcelWriter(dir_path + '\Output\Product_Auditer_Output' + str(now) + '.xlsx')
 
         df.to_excel(writer, 'Output', index=False)
 
@@ -232,4 +209,3 @@ if __name__ == '__main__':
    obj.write_output()
 
    print(f'\nExecution time: {(time.time()-start_time)/60} mins')
- 
